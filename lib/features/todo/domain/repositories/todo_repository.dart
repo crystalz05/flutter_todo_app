@@ -24,9 +24,9 @@ abstract class TodoRepository {
   Future<Either<Failure, void>> deleteTodo(String id);
 
   //Get only completed todos
-  Future<Either<Failure, Todo>> getCompletedTodos();
+  Future<Either<Failure, List<Todo>>> getCompletedTodos();
 
   //Get only pending todos
-  Future<Either<Failure, Todo>> getPendingTodos();
+  Future<Either<Failure, List<Todo>>> getPendingTodos();
 
 }

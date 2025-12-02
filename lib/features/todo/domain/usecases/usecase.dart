@@ -42,7 +42,7 @@ class CreateTodo extends UseCase<Todo, TodoParams>{
       title: param.title ?? "",
       description: param.description ?? "",
       isDone: param.isDone,
-      createdAt: DateTime.now(),
+      createdAt: DateTime.now().millisecondsSinceEpoch,
     );
     return repository.createTodo(todo);
   }
@@ -57,5 +57,4 @@ class UpdateTodo extends UseCase<Todo, IdParams>{
   Future<Either<Failure, Todo>> call(IdParams param) {
     return repository.toggleTodoStatus(param.id);
   }
-
 }

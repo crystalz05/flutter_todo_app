@@ -6,7 +6,7 @@ class Todo extends Equatable {
   final String title;
   final String description;
   final bool isDone;
-  final DateTime createdAt;
+  final int createdAt;
 
   const Todo({
     required this.id,
