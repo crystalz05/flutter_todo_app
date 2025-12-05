@@ -43,6 +43,8 @@ dependencies:
   get_it: ^7.6.4
   url_launcher: ^6.1.11
   floor: ^1.4.2
+  uuid: ^4.3.3
+
 
 
 dev_dependencies:

@@ -15,10 +15,10 @@ abstract class TodoRepository {
   Future<Either<Failure, Todo>> createTodo(Todo todo);
 
   //Update a todo
-  Future<Either<Failure, Todo>> updateTodo(Todo todo);
+  Future<Either<Failure, void>> updateTodo(Todo todo);
 
   //Toggle todo to done or not
-  Future<Either<Failure, Todo>> toggleTodoStatus(String id);
+  Future<Either<Failure, void>> toggleTodoStatus(String id);
 
   //Delete a todo
   Future<Either<Failure, void>> deleteTodo(String id);

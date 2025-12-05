@@ -4,6 +4,7 @@ import 'package:flutter_todo_app/core/error/failures.dart';
 import 'package:flutter_todo_app/core/usecases/usecase.dart';
 import 'package:flutter_todo_app/features/todo/domain/entities/todo.dart';
 import 'package:flutter_todo_app/features/todo/domain/repositories/todo_repository.dart';
+import 'package:uuid/uuid.dart';
 
 class GetAllTodos extends UseCase<List<Todo>, NoParams>{
 
@@ -31,14 +32,17 @@ class GetTodoById extends UseCase<Todo, IdParams>{
 class CreateTodo extends UseCase<Todo, TodoParams>{
   
   final TodoRepository repository;
-  
+  final _uuid = const Uuid();
+
   CreateTodo(this.repository);
 
   @override
   Future<Either<Failure, Todo>> call(TodoParams param) {
 
+    final id = _uuid.v4();
+
     final todo = Todo(
-      id: "", //id is auto generated
+      id: id,
       title: param.title ?? "",
       description: param.description ?? "",
       isDone: param.isDone,
@@ -48,13 +52,13 @@ class CreateTodo extends UseCase<Todo, TodoParams>{
   }
 }
 
-class UpdateTodo extends UseCase<Todo, IdParams>{
+class UpdateTodo extends UseCase<void, IdParams>{
   final TodoRepository repository;
 
   UpdateTodo(this.repository);
 
   @override
-  Future<Either<Failure, Todo>> call(IdParams param) {
+  Future<Either<Failure, void>> call(IdParams param) {
     return repository.toggleTodoStatus(param.id);
   }
 }
