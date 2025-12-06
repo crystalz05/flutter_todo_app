@@ -45,20 +45,64 @@ class CreateTodo extends UseCase<Todo, TodoParams>{
       id: id,
       title: param.title ?? "",
       description: param.description ?? "",
-      isDone: param.isDone,
+      isDone: false,
       createdAt: DateTime.now().millisecondsSinceEpoch,
     );
     return repository.createTodo(todo);
   }
 }
 
-class UpdateTodo extends UseCase<void, IdParams>{
+class UpdateTodo extends UseCase<void, TodoParams>{
   final TodoRepository repository;
 
   UpdateTodo(this.repository);
 
   @override
+  Future<Either<Failure, void>> call(TodoParams param) {
+    return repository.updateTodo(param.toTodo());
+  }
+}
+
+class ToggleTodoStatus extends UseCase<void, IdParams> {
+  final TodoRepository repository;
+
+  ToggleTodoStatus(this.repository);
+
+  @override
+  Future<Either<Failure, void>> call(IdParams params) {
+    return repository.toggleTodoStatus(params.id);
+  }
+}
+
+class DeleteTodo extends UseCase<void, IdParams>{
+  final TodoRepository repository;
+
+  DeleteTodo(this.repository);
+
+  @override
   Future<Either<Failure, void>> call(IdParams param) {
-    return repository.toggleTodoStatus(param.id);
+    return repository.deleteTodo(param.id);
+  }
+}
+
+class GetCompletedTodos extends UseCase<List<Todo>, NoParams>{
+
+  final TodoRepository repository;
+  GetCompletedTodos(this.repository);
+
+  @override
+  Future<Either<Failure, List<Todo>>> call(NoParams param) {
+    return repository.getCompletedTodos();
+  }
+}
+
+class GetPendingTodos extends UseCase<List<Todo>, NoParams>{
+
+  final TodoRepository repository;
+  GetPendingTodos(this.repository);
+
+  @override
+  Future<Either<Failure, List<Todo>>> call(NoParams param) {
+    return repository.getPendingTodos();
   }
 }

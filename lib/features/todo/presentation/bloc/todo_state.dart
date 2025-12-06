@@ -56,11 +56,11 @@ class TodosLoaded extends TodoState {
 }
 
 class TodoLoaded extends TodoState {
-  final Todo todo;
+  final Todo todos;
 
-  const TodoLoaded(this.todo);
+  const TodoLoaded(this.todos);
   @override
-  List<Object?> get props => [todo];
+  List<Object?> get props => [todos];
 }
 
 class TodoOperationSuccess extends TodoState {

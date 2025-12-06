@@ -9,7 +9,7 @@ abstract class TodoEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class TodoLoadedEvent extends TodoEvent {}
+class LoadTodosEvent extends TodoEvent {}
 
 class LoadTodoByIdEvent extends TodoEvent {
   final String id;

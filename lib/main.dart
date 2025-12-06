@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_app/features/todo/presentation/pages/todo_list_page.dart';
+import 'core/di/injection_container.dart' as di;
 
-void main() {
+
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
+
   runApp(const MyApp());
 }
 
@@ -15,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(),
+      home: const TodoListPage(),
     );
   }
 }
