@@ -1,72 +1,59 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_todo_app/features/todo/presentation/pages/todo_list_page.dart';
-import 'core/di/injection_container.dart' as di;
+// lib/main.dart
 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/di/injection_container.dart' as di;
+import 'core/presentation/cubit/theme_cubit.dart';
+import 'features/todo/presentation/pages/todo_list_page.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const TodoListPage(),
+    return BlocProvider(
+      create: (_) => di.sl<ThemeCubit>(),
+      child: const AppView(), // Separate widget to avoid context issues
     );
   }
 }
 
-
-class MyHomePage extends StatefulWidget{
-  const MyHomePage({super.key});
-
-  @override
-  State<StatefulWidget> createState() => _MyHomePage();
-
-}
-
-
-class _MyHomePage extends State<MyHomePage>{
-
-  int counter = 0;
-
-  void incrementCount(){
-    setState(() {
-      counter++;
-    });
-  }
-
+class AppView extends StatelessWidget {
+  const AppView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Todo Application"),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Text("$counter"),
-            SizedBox(height: 18),
-            ElevatedButton(onPressed: (){
-              incrementCount();
-            },
-                child: Text("Press me"))
-          ],
-        ),
-      ),
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, themeState) {
+        final themeCubit = context.read<ThemeCubit>();
+
+        return MaterialApp(
+          title: 'Todo App',
+          debugShowCheckedModeBanner: false,
+          themeMode: themeCubit.themeMode,
+          theme: ThemeData(
+            useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.blue,
+              brightness: Brightness.light,
+            ),
+          ),
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.blue,
+              brightness: Brightness.dark,
+            ),
+          ),
+          home: const TodoListPage(),
+        );
+      },
     );
   }
 }
