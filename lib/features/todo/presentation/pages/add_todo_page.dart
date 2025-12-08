@@ -40,7 +40,6 @@ class _AddTodoPageState extends State<AddTodoPage> {
               TextFormField(
                 controller: _titleController,
                 decoration: const InputDecoration(
-                  labelText: 'Title',
                   border: OutlineInputBorder(),
                   hintText: 'Enter todo title',
                 ),
@@ -60,7 +59,6 @@ class _AddTodoPageState extends State<AddTodoPage> {
               TextFormField(
                 controller: _descriptionController,
                 decoration: const InputDecoration(
-                  labelText: 'Description (Optional)',
                   border: OutlineInputBorder(),
                   hintText: 'Enter todo description',
                 ),
